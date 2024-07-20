@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Listings{% endblock %}
+{% block content %}
+<br>
+    <div class="container">
+        <h1>Car Listings</h1>
+        <ul>
+        {% for car in cars %}
+            <li>
+                {{ car.year }} {{ car.make }} {{ car.model }} - {{ car.price }}
+                <a href="{% url 'car_detail' car.pk %}">Details</a>
+                <form action="{% url 'car_delete' car.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No cars found.</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

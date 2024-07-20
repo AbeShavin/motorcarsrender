@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Motorcars.com{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+    <body>
+    
+        <header>
+            <nav class="navbar">
+                <div><img class="logo" src="{% static 'images/logotry2.png' %}" alt="Background Image"></div>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="{% url 'car_search' %}">Search Motorcars</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'car_create' %}" class="signin-button">Add Vehicle</a></li>
+                    <li><b><a href="{% url 'account_login' %}" class="signin-button">My Home</a></b></li>
+                    <li><a href="{% url 'account_logout' %}" class="submit-button">Sign Out</a></li>
+                    {% else %}
+                    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                    <li><a href="{% url 'account_login' %}" class="submit-button">Sign In</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <br>
+            <div class="container">
+            <br>
+            {% block content %}
+            <!-- my content here -->
+            {% endblock %}
+            <br>
+            </div>
+        </main> 
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>

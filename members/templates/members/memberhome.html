@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Members Page{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>User Profile</h2>
+    
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    
+    <h3>Account Management</h3>
+    <ul>
+        <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+        <li><a href="{% url 'account_email' %}">Change Email</a></li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Listings{% endblock %}
+{% block content %}
+<div class="car-detail-container">
+    <div class="car-images">
+        {% for image in car.additional_images.all %}
+            <a href="{{ image.image.url }}" target="_blank">
+                <img src="{{ image.image.url }}" alt="Additional Image" class="car-image" style="width:100px;height:auto;">
+            </a>
+        {% endfor %}
+    </div>
+    <div class="car-info">
+        {% if user == car.owner %}
+            <div class="car-actions">
+                <a href="{% url 'car_edit' car.pk %}" class="button edit-button">Edit</a>
+                <a href="{% url 'car_delete' car.pk %}" class="button delete-button">Delete</a>
+            </div>
+        {% endif %}
+        <h2>{{ car.year }} {{ car.make }} {{ car.model }}</h2>
+        <p><strong>Location:</strong> {{ car.zipcode }}</p>
+        <p><strong>Price:</strong> ${{ car.price }}</p>
+        <p>{{ car.description }}</p>
+    </div>
+</div>
+<div>
+    {% if request.user.is_authenticated %}
+  <a href="{% url 'start_conversation' car.owner.pk %}">Message the Seller</a>
+{% else %}
+  <p><a href="{% url 'login' %}?next={% url 'car_detail' car.pk %}">Log in</a> to message the seller.</p>
+{% endif %}
+</div>
+{% endblock %}

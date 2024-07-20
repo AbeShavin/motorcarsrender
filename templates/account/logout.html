@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Logout?{% endblock %}
+
+{% block content %}
+<div class="form-container">
+<center>
+    <h3>Are you sure you want to sign out?</h3>
+    <br>
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="submit-button">YES</button>
+        <br>  
+    </form>
+    <a href="{% url 'account_login' %}">no</a>
+</center>
+</div>
+{% endblock %}

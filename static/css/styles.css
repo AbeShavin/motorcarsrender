@@ -1,0 +1,299 @@
+/* Reset some basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header and Navigation styles */
+header {
+    color: #fff;
+    padding: 10px 20px;   
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: rgb(255, 255, 255);
+    background-image: url( '/static/images/skidmarks.png');
+}
+
+h1 {
+    color: rgb(41, 41, 41);
+}
+
+h2 {
+    color: #363636;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #7d7b7b;
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+
+/* Form Container */
+.form-container {
+    width: 30%;
+    max-width: 800px;
+    min-width: 200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+.car-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.car-form .form-group {
+    margin-bottom: 20px;
+}
+
+.car-form label {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.car-form input[type="file"] {
+    padding: 12px;
+    border: 1px solid #d1d5da;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.car-form input[type="text"],
+.car-form input[type="email"],
+.car-form input[type="password"],
+.car-form select,
+.car-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #d1d5da;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.car-form input[type="file"]::-webkit-file-upload-button {
+    padding: 10px;
+    font-size: 16px;
+    background: #3498db;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.car-form input[type="file"]::-webkit-file-upload-button:hover {
+    background: #2980b9;
+}
+
+/* Submit Button */
+.submit-button {
+    padding: 15px 20px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Add this to your main CSS file */
+.acontainer {
+    display: flex;
+    justify-content: space-between;
+ }
+ 
+ .left-half, .right-half {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+ }
+ 
+ .left-half {
+    border-right: 1px solid #ccc;
+ }
+ 
+ .right-half {
+    padding-left: 20px;
+ }
+ 
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px 10px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+}
+
+.maincontainer {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #000000;
+    background-color: rgb(255, 255, 255);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px 0 rgb(109, 109, 109);
+    border-radius: 4px;
+}
+
+.logo {
+    max-height: 40px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #3f3f3f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.nav-links a:hover {
+    color: rgb(255, 123, 0);
+    background: #dedede;
+}
+
+/* Mobile menu styles */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    height: 3px;
+    width: 25px;
+    background-color: #002e4d;
+    margin: 4px 0;
+    transition: all 0.3s;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #333;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        text-align: center;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+}
+
+/* Car Detail Page Styles */
+.car-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.car-images {
+    flex: 1;
+    min-width: 300px;
+}
+
+.car-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+}
+
+.car-image:hover {
+    transform: scale(1.1);
+}
+
+.car-info {
+    flex: 2;
+    min-width: 300px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.car-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.edit-button {
+    background-color: #28a745;
+}
+
+.edit-button:hover {
+    background-color: #218838;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+

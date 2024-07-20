@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Listings{% endblock %}
+{% block content %}
+<br>
+    <div class="form-container">
+          <h2>Are you sure you want to delete {{ car.make }} {{ car.model }} ({{ car.year }})?</h2>
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="submit-button">Yes, delete</button>
+            <a href="{% url 'car_detail' car.pk %}">Cancel</a>
+          </form>       
+    </div>
+{% endblock %}

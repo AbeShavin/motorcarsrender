@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Search{% endblock %}
+{% block content %}
+<div class="acontainer">
+<div class="left-half">
+<div class="form-container">
+<h2>Search Cars</h2>
+  <form method="get" action=".">
+    {{ form.as_p }}
+    <button class="submit-button">Search</button>
+  </form>
+</div> 
+</div>
+<div class="right-half">
+<center>
+  <h2>Results</h2>
+  <ul class="no-bullets">
+    {% for car in cars %}
+      <li>
+      <a href="{% url 'car_detail' car.pk %}">
+        {% if car.image %}
+          <img src="{{ car.image.url }}" alt="{{ car.make }} {{ car.model }}" style="width:100px;height:auto;">
+        {% endif %}
+        <b>{{ car.year }}</b> | {{ car.make }} | {{ car.model }} | ${{ car.price }} | <b>Location:</b>{{ car.zipcode }}
+      </a>
+    </li>
+  {% empty %}
+    <li>No cars found.</li>
+  {% endfor %}
+  </ul>
+</center>
+</div>
+</div>
+{% endblock %}
