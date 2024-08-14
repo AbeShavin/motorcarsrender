@@ -13,7 +13,8 @@ SECRET_KEY = 'thisisjustatestpleasedontghackme'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'False'
 
-ALLOWED_HOSTS = 'motorcars-com.onrender.com'
+ALLOWED_HOSTS = ['motorcars-com.onrender.com', 'localhost', '127.0.0.1']
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
