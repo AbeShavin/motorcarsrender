@@ -8,12 +8,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-2la%k5a*oj^k!&9nnxc4&b=g%im1v8n@pgh3l!$08d)+%igos$"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 # Application definition
 INSTALLED_APPS = [
@@ -77,7 +77,9 @@ DATABASES = {
     )
 }
 
-DATABASES["default"] = dj_database_url.parse("postgresql://motorcarsdatabaseinstance_user:WF6Xwtikj1jH6JkoGeL6dcxKFwEacBP5@dpg-cquihjaj1k6c73b5c5gg-a.virginia-postgres.render.com/motorcarsdatabaseinstance")
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
