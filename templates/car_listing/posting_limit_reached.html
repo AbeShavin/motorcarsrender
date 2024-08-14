@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Posting Limit Reached</h1>
+<p>You have reached the maximum number of car listings allowed ({{ POSTING_LIMIT }}). Please delete an existing listing before adding a new one.</p>
+<a href="{% url 'car_list' %}">Back to list</a>
+{% endblock %}

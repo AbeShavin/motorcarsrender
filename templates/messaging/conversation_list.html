@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Motorcars.com - Conversations{% endblock %}
+
+{% block content %}
+<center><h1>Messages</h1></center>
+<table class="results-table">
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Reply</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if conversation_data %}
+        {% for item in conversation_data %}
+        <tr>
+            <td>{{ item.partner.username }}</td>
+            <td>{{ item.last_message.content }}</td>
+            <td>
+                {% if item.unread_count > 0 %}
+                    <span class="unread-label">Unread ({{ item.unread_count }})</span>
+                {% else %}
+                    <span class="read-label">Read</span>
+                {% endif %}
+            </td>
+            <td><a href="{% url 'conversation_detail' item.conversation.pk %}" class="testbutton">Reply</a></td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td colspan="4">No Messages</td></tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

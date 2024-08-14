@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Motorcars.com - Account Overview{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <h2>Dashboard Navigation</h2>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dealer_dashboard' %}">Dashboard Overview</a></li>
+                <li><a href="{% url 'manage_listings' %}">Manage Listings</a></li>
+                <li><a href="{% url 'messages' %}">Messages</a></li>
+                <li><a href="{% url 'reviews' %}">Reviews</a></li>
+                <li><a href="{% url 'account_settings' %}">Account Settings</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div class="dashboard-content">
+       
+</div>
+{% endblock %}

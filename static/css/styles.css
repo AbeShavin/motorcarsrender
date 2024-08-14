@@ -5,26 +5,28 @@
     box-sizing: border-box;
 }
 
-/* Header and Navigation styles */
-header {
-    color: #fff;
-    padding: 10px 20px;   
-}
-
+/* Body and Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    background: rgb(255, 255, 255);
-    background-image: url( '/static/images/skidmarks.png');
+    font-family: 'Roboto', 'Arial Bold', 'Helvetica';
+    background: rgb(222, 222, 222);
+    letter-spacing: 1px;
 }
 
+/* Typography */
 h1 {
-    color: rgb(41, 41, 41);
+    color: rgb(29, 29, 29);
+    text-decoration: underline;
+    text-shadow:
+    1px 1px 0 #6d6d6d, /* Light shadow */
+    -1px -1px 0 #454545; /* Dark shadow */
 }
-
+  
 h2 {
-    color: #363636;
+    color: #303065;
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
+    letter-spacing: 1px;
 }
 
 p {
@@ -32,22 +34,174 @@ p {
     margin: 10px 0;
 }
 
+
 a {
     text-decoration: none;
     color: #3498db;
 }
 
+ul {
+    list-style-type: none;
+}
+
+/* Header and Navbar Styles */
+header {
+    color: #acacac;
+}
+
+.pname {
+    color:rgb(0, 61, 111);
+    text-decoration: underline;
+}
+
+.pmessage {
+    color:black;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo img {
+    max-height: 40px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #1b1b1b;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.nav-links a:hover {
+    color: rgb(45, 45, 45);
+    background: #c8ff49;
+    text-decoration: underline;
+}
+
+.nav-links li a.sidebar-toggle {
+    color: white;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Mobile Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    height: 3px;
+    width: 25px;
+    background-color: #002e4d;
+    margin: 4px 0;
+    transition: all 0.3s;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 70px; /* Matches the navbar height */
+    left: -250px; /* Hidden by default */
+    background-color: #333;
+    padding-top: 20px;
+    transition: left 0.3s ease;
+    overflow-x: hidden;
+    z-index: 1000; /* Ensure it sits below the navbar */
+}
+
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 10px 15px;
+}
+
+.sidebar-menu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #575757;
+    border-radius: 4px;
+}
+
+/* Show Sidebar When .sidebar-open is Applied */
+body.sidebar-open .sidebar {
+    left: 0; /* Bring the sidebar into view */
+}
+
+body.sidebar-open .main-content {
+    margin-left: 250px; /* Adjust based on the sidebar width */
+}
+
+/* Hide Sidebar When Logged Out */
+body.logged-out .sidebar {
+    display: none;
+}
+
+body.logged-in .main-content {
+    margin-left: 250px; /* Adjust based on the sidebar width */
+}
+
+/* Main Content Styles */
+.main-content {
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.labelz {
+    background-color: rgb(226, 253, 208);
+    font-weight: bold;
+}
 
 /* Form Container */
-.form-container {
-    width: 30%;
+.form-container, .front-form-container {
+    width: 65%;
     max-width: 800px;
     min-width: 200px;
     margin: 30px auto;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #dff0ff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: url("/static/images/skidmarks.png") 100% ;
+
 }
 
 /* Form Styles */
@@ -57,18 +211,19 @@ a {
 }
 
 .car-form .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .car-form label {
-    font-size: 16px;
-    color: #2c3e50;
-    margin-bottom: 10px;
+    font-size: 12px;
+    color: #0065cb;
+    margin-bottom: 2px;
     display: block;
+    font-weight: bold;
 }
 
 .car-form input[type="file"] {
-    padding: 12px;
+    padding: 5px;
     border: 1px solid #d1d5da;
     border-radius: 4px;
     font-size: 16px;
@@ -77,20 +232,30 @@ a {
 .car-form input[type="text"],
 .car-form input[type="email"],
 .car-form input[type="password"],
+.car-form input[type="number"],
 .car-form select,
 .car-form textarea {
     width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #d1d5da;
+    padding: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 2px solid #97c9fc;
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-form input[type="text"]:focus, 
+.car-form input[type="number"]:focus, 
+.car-form select:focus {
+    border-color: #0065cb;
+    box-shadow: 0 0 5px rgba(0, 101, 203, 0.5);
+    outline: none;
 }
 
 .car-form input[type="file"]::-webkit-file-upload-button {
-    padding: 10px;
+    padding: 5px;
     font-size: 16px;
     background: #3498db;
     border: none;
@@ -110,7 +275,7 @@ a {
     background-color: #3498db;
     border: none;
     border-radius: 4px;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -121,95 +286,260 @@ a {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Add this to your main CSS file */
+/* Additional Container and Utility Classes */
 .acontainer {
     display: flex;
     justify-content: space-between;
- }
+    flex-wrap: wrap;
+}
  
- .left-half, .right-half {
+.left-half, .right-half {
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
- }
- 
- .left-half {
-    border-right: 1px solid #ccc;
- }
- 
- .right-half {
-    padding-left: 20px;
- }
- 
+}
 
-.container {
+.left-half {
+    border-right: 1px solid #ccc;
+}
+
+.right-half {
+    padding-left: 20px;
+}
+
+
+.container, .maincontainer {
     max-width: 800px;
     margin: 0 auto;
-    padding: 10px 10px;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
     border: 1px solid #e1e1e1;
     border-radius: 4px;
-    background-color: rgb(255, 255, 255);
 }
 
-.maincontainer {
-    max-width: 800px;
-    margin: 0 auto;
-    border: 1px solid #000000;
-    background-color: rgb(255, 255, 255);
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2px 5px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 4px 8px 0 rgb(109, 109, 109);
-    border-radius: 4px;
-}
-
-.logo {
-    max-height: 40px;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-}
-
-.nav-links li {
-    margin-left: 20px;
-}
-
-.nav-links a {
+/* Additional Button Styles */
+.testbutton {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #1e90ff, #00bfff);
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
     text-decoration: none;
-    color: #3f3f3f;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
+    transition: all 0.3s ease-in-out;
 }
 
-.nav-links a:hover {
-    color: rgb(255, 123, 0);
-    background: #dedede;
+.testbutton:hover {
+    background: linear-gradient(45deg, #00bfff, #1e90ff);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Mobile menu styles */
-.menu-toggle {
-    display: none;
+.testbutton:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Car Detail Page Styles */
+.car-detail-container {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.car-main-image-container {
+    width: 100%;
+    text-align: center;
+}
+
+.main-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.car-images {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.thumbnail:hover {
+    border-color: #007BFF;
+}
+
+.car-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.car-actions {
+    margin-bottom: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.edit-button {
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    border: 1px solid transparent;
+}
+
+.edit-button:hover {
+    background: linear-gradient(135deg, #00bfff, #1e90ff);
+    transform: translateY(-4px);
+}
+
+.delete-button {
+    background: linear-gradient(135deg, #ff6347, #dc143c);
+    border: 1px solid transparent;
+}
+
+.delete-button:hover {
+    background: linear-gradient(135deg, #dc143c, #ff6347);
+    transform: translateY(-4px);
+}
+
+.contact-button {
+    background-color: #007BFF;
+}
+
+.contact-seller {
+    text-align: center;
+}
+
+/* Search Form Styles */
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 120px;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.ssubmit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.bar {
-    height: 3px;
-    width: 25px;
-    background-color: #002e4d;
-    margin: 4px 0;
-    transition: all 0.3s;
+.ssubmit-button:hover {
+    background-color: #0056b3;
 }
 
-/* Responsive styles */
+/* Pagination Styles */
+.pagination {
+    margin: 1em 0;
+    text-align: center;
+}
+
+.step-links a {
+    margin: 0 0.5em;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.step-links a:hover {
+    text-decoration: underline;
+}
+
+.step-links .current {
+    margin: 0 0.5em;
+    font-weight: bold;
+}
+
+/* Messaging App Styles */
+.unread-label {
+    color: red;
+    font-weight: bold;
+}
+
+.read-label {
+    color: green;
+    font-weight: normal;
+}
+
+/* Slider Container */
+.slider-container {
+    margin-bottom: 20px;
+}
+
+.noUi-target {
+    margin: 10px 0;
+}
+
+.noUi-connect {
+    background: #007bff;
+}
+
+.noUi-horizontal .noUi-handle {
+    background: #007bff;
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    background: #f9f9f9;
+    font-size: 16px;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -229,71 +559,71 @@ a {
     .menu-toggle {
         display: flex;
     }
+
+    .sidebar {
+        width: 100%;
+        left: -100%; /* Hide sidebar by default */
+    }
+
+    body.sidebar-open .sidebar {
+        left: 0; /* Show sidebar when open */
+    }
+
+    body.sidebar-open .main-content {
+        margin-left: 0; /* Reset main content margin */
+    }
+
+    .left-half, .right-half {
+        flex: 1 0 100%;
+    }
 }
 
-/* Car Detail Page Styles */
-.car-detail-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin: 20px 0;
+/* Accessibility and Focus States */
+a:focus, button:focus {
+    outline: 2px solid #007bff; /* Blue outline for accessibility */
+    outline-offset: 2px; /* Space between outline and element */
 }
 
-.car-images {
-    flex: 1;
-    min-width: 300px;
+.labelzs {
+    font-size: 18px;
+    color: #007bff;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    letter-spacing: 0.5px;
 }
 
-.car-image {
+.labelzss {
+    font-size: 14px;
+    color: #686868;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+
+/* Style for the vehicle search results table */
+.results-table {
     width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.results-table th,
+.results-table td {
+    padding: 4px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.results-table img {
+    max-width: 100px;
     height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-    transition: transform 0.3s;
 }
-
-.car-image:hover {
-    transform: scale(1.1);
-}
-
-.car-info {
-    flex: 2;
-    min-width: 300px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.car-actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: white;
-    display: inline-block;
-    transition: background-color 0.3s;
-}
-
-.edit-button {
-    background-color: #28a745;
-}
-
-.edit-button:hover {
-    background-color: #218838;
-}
-
-.delete-button {
-    background-color: #dc3545;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-}
-
+/* end vehicle search*/

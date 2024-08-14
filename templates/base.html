@@ -5,42 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Motorcars.com{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-</head>
-    <body>
     
-        <header>
-            <nav class="navbar">
-                <div><img class="logo" src="{% static 'images/logotry2.png' %}" alt="Background Image"></div>
-                <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="{% url 'car_search' %}">Search Motorcars</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'car_create' %}" class="signin-button">Add Vehicle</a></li>
-                    <li><b><a href="{% url 'account_login' %}" class="signin-button">My Home</a></b></li>
-                    <li><a href="{% url 'account_logout' %}" class="submit-button">Sign Out</a></li>
-                    {% else %}
-                    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-                    <li><a href="{% url 'account_login' %}" class="submit-button">Sign In</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <br>
-            <div class="container">
-            <br>
-            {% block content %}
-            <!-- my content here -->
-            {% endblock %}
-            <br>
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    
+    <!-- CSS and Fonts -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"></noscript>
+
+    <!-- SEO and Social Media Meta Tags -->
+    <meta name="description" content="Motorcars.com - Find and list vehicles and motorcars easily.">
+    <meta property="og:title" content="Motorcars.com">
+    <meta property="og:description" content="Find and list vehical and motorcars easily.">
+    <meta property="og:image" content="{% static 'images/trylogo.png' %}">
+    <meta property="og:url" content="https://www.motorcars.com">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-user-id="{{ request.user.id }}">
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{% static 'images/trylogo.png' %}" alt="Motorcars Logo">
             </div>
-        </main> 
-        <script src="{% static 'js/script.js' %}"></script>
-    </body>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{% url 'car_search' %}">Search Motorcars</a></li>
+                <li><a href="{% url 'car_search' %}">Browse Listings</a></li>
+                <li><a href="{% url 'car_search' %}">Validate It!</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'account_login' %}"><b>My Home</b></a></li>
+                <li><a href="#" id="sidebar-toggle" class="sidebar-toggle">☰ Account</a></li>
+                <li><a href="{% url 'account_logout' %}" class="button edit-button">Sign Out</a></li>
+                {% else %}
+                <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'account_login' %}" class="button edit-button">Sign In</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% if user.is_authenticated %}
+            <div class="sidebar">
+                <ul class="sidebar-menu" id="dnav-links">
+                    <li><a href="{% url 'car_create' %}" style="font-weight:bold;">Add Vehicle</a></li>
+                    <li><a href="{% url 'favorite_list' %}">Favorites</a></li>
+                    <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+                    <li><a href="{% url 'account_email' %}">Change Email</a></li>
+                    <li><a href="{% url 'conversation_list' %}">Messages</a></li>
+                </ul>
+            </div>
+        {% endif %}
+        <div class="main-content">
+            <div class="container">
+            {% block content %}
+            <!-- Page-specific content here -->
+            {% endblock %}
+            </div>
+        </div>            
+    </main> 
+
+    <!-- External JavaScript Files -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/favorites.js' %}"></script>
+    
+   
+</body>
 </html>

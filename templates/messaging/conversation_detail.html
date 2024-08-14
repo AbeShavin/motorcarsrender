@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Conversation{% endblock %}
+{% block content %}
+<div class="form-container">
+<h2>Conversation</h2>
+<div>
+    {% for message in conversation.messages.all %}
+    <p class="pname"><strong>{{ message.sender.username }}</strong>:</p><p class="pmessage"> {{ message.content }} <em>{{ message.timestamp }}</em></p>
+    {% endfor %}
+</div>
+<center>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="test-button">Send Message</button>
+</form>
+
+<form method="get" action="{% url 'delete_conversation' pk=conversation.pk %}" style="margin-top: 10px;">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Delete Conversation</button>
+</form>
+</center>
+</div>
+{% endblock %}

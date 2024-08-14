@@ -2,15 +2,51 @@
 
 {% block content %}
 {% load static %}
-    <center><h1>Welcome to Motorcars.com</h1></center>
-    <h2>Please post your vehicle for sale <u>or</u> search our ever-growing database!</h2>
-    <p>Some websites try to do too much. Then it becomes less about offering the customer
-       what they actually want, and more about trying to sell them something they don’t need. 
-       We aim to remedy this by making our website free for all users, and bringing it back to 
-       the basics. In time, we would like to see the website evolve into a useful app that puts our 
-       users in the driver seat.
-    </p>
-    <br>
-    <center><img src="{% static 'images/sports.jpg' %}" alt="Background Image"></center>
-{% endblock %}
+<div class="acontainer">
+<div class="left-half">    
+  <div class="front-form-container">
+    <center><h2>Start a Search<img src="{% static 'images/searchicon.png' %}"></h2></center>
+    <form method="get" action="{% url 'search_results' %}" class="car-form">
+        <div class="sform-group">
+            <div class="sform-field">
+                {{ form.price_min.label_tag }} {{ form.price_min }}
+            </div>
+            <div class="sform-field">
+                {{ form.price_max.label_tag }} {{ form.price_max }}
+            </div>
+        </div>
+        <div class="sform-group">
+            <div class="sform-field">
+                {{ form.mileage_min.label_tag }} {{ form.mileage_min }}
+            </div>
+            <div class="sform-field">
+                {{ form.mileage_max.label_tag }} {{ form.mileage_max }}
+            </div>
+        </div>
+        <div class="sform-group">
+            <div class="sform-field">
+                {{ form.zipcode.label_tag }} {{ form.zipcode }}
+            </div>
+            <div class="sform-field">
+                {{ form.radius.label_tag }} {{ form.radius }}
+            </div>
+        </div>
 
+        
+        <button class="ssubmit-button">Search</button>
+    </form>
+</div>
+</div>
+<div class="right-half">
+<br>
+  <center><h2>Welcome to Motorcars.com, Please post your vehicle for sale <u>or</u> search our ever-growing database!</h2></center>
+  <p>Some websites try to do too much. Then it becomes less about offering the customer
+  what they actually want, and more about trying to sell them something they don’t need. 
+  We aim to remedy this by making our website free for all users, and bringing it back to 
+  the basics. In time, we would like to see the website evolve into a useful app that puts our 
+  users in the driver seat.
+  </p>   
+</div>
+</div>
+
+{% endblock %}

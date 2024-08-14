@@ -1,0 +1,13 @@
+{
+    "makes": [
+      {"id": 1, "name": "Toyota"},
+      {"id": 2, "name": "Honda"}
+    ],
+    "models": [
+      {"id": 1, "make_id": 1, "name": "Corolla"},
+      {"id": 2, "make_id": 1, "name": "Camry"},
+      {"id": 3, "make_id": 2, "name": "Civic"},
+      {"id": 4, "make_id": 2, "name": "Accord"}
+    ]
+  }
+  

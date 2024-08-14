@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+  
+{% block content %}
+<div class="form-container"> 
+    <h2>Search Motorcars!</h2>   
+    <form method="get" action="{% url 'search_results' %}">
+        
+        <!-- Make and Model -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-2"><label class="labelzs">Choose:</label></div>
+            <div class="col-md-5">
+                {{ form.make }}
+                <label class="labelzss">Make</label>
+            </div>
+            <div class="col-md-5">
+                {{ form.model }}
+                <label class="labelzss">Model</label>
+            </div>
+        </div>
+        
+        <div class="row g-3 mt-3">
+            <div class="col-md-2"><label class="labelzs">Year Range:</label></div>
+            <div class="col-md-5 form-floating">
+                {{ form.year_min }}
+                <label for="id_year_min">earliest</label>
+            </div>
+            <div class="col-md-5 form-floating">
+                {{ form.year_max }}
+                <label for="id_year_max">latest</label>
+            </div>
+        </div>
+
+        <!-- Price Min and Max -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-2"><label class="labelzs">Pricing:</label></div>
+            <div class="col-md-4 form-floating">
+                {{ form.price_min }}
+                <label for="id_price_min">Min $</label>
+            </div>
+            <div class="col-md-1"><center>-</center></div>
+            <div class="col-md-5 form-floating">
+                {{ form.price_max }}
+                <label for="id_price_max">Max $</label>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">    
+            <div class="col-md-2"><label class="labelzs">Mileage:</label></div>
+            <div class="col-md-4 form-floating">
+                {{ form.mileage_min }}
+                <label for="id_mileage_min">Min Mileage</label>
+            </div>
+            <div class="col-md-1"><center>-</center></div>
+            <div class="col-md-5 form-floating">
+                {{ form.mileage_max }}
+                <label for="id_mileage_max">Max Mileage</label>
+            </div>
+        </div>
+        
+        
+        
+        <!-- Zipcode and Radius -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6 form-floating">
+                {{ form.zipcode }}
+                <label for="id_zipcode">Zipcode-5 Digit Ex:90210</label>
+            </div>
+            <div class="col-md-6 form-floating">
+                {{ form.radius }}
+                <label for="id_radius">Radius-In Miles:</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+<!-- Include JavaScript for Dynamic Dropdowns -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Handling the dynamic dropdown for car models
+        $("#id_make").change(function () {
+            var url = "{% url 'ajax_load_models' %}";  // Ensure you replace with the correct URL name
+            var makeId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'make': makeId
+                },
+                success: function (data) {
+                    $("#id_model").html('<option value="">All Models</option>');
+                    $.each(data, function (key, value) {
+                        $("#id_model").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        });
+
+        // Preload the model dropdown if a make is already selected (for editing existing listings)
+        {% if form.make.value %}
+        $("#id_make").trigger('change');
+        {% endif %}
+    });
+</script>
+
+
+{% endblock %}

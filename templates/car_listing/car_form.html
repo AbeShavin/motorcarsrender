@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Listings{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>{{ car.pk|yesno:"Edit Car Listing,Create Car Listing" }}</h1>
+    <form method="post" enctype="multipart/form-data" class="car-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Handling the Image Upload Section -->
+        <div class="form-group">
+            <label for="id_image">Select Multiple (up to 10) Images:</label>
+            <input type="file" name="image" id="id_image" multiple>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button edit-button">Save</button>
+    </form>
+</div>
+
+<!-- Include JavaScript for Dynamic Dropdowns -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Handling the dynamic dropdown for car models
+        $("#id_make").change(function () {
+            var url = "{% url 'ajax_load_models' %}";  // Ensure you replace with the correct URL name
+            var makeId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'make': makeId
+                },
+                success: function (data) {
+                    $("#id_model").html('<option value="">Select Model</option>');
+                    $.each(data, function (key, value) {
+                        $("#id_model").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        });
+
+        // Preload the model dropdown if a make is already selected (for editing existing listings)
+        {% if form.make.value %}
+        $("#id_make").trigger('change');
+        {% endif %}
+    });
+</script>
+{% endblock %}

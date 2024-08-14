@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Motorcars.com - Search{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card p-4 shadow">
+        <center><h1 class="mb-4">Search Motorcars</h1></center>
+        
+        <form method="get" action="{% url 'search_results' %}" class="car-form">
+            <!-- Make and Model -->
+            <div class="row g-3">
+                <div class="col-md-6 form-floating">
+                    {{ form.make|as_crispy_field }}
+                    <label for="id_make">Make</label>
+                </div>
+                <div class="col-md-6 form-floating">
+                    {{ form.model|as_crispy_field }}
+                    <label for="id_model">Model</label>
+                </div>
+            </div>
+            
+            <!-- Price Min and Max -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-6 form-floating">
+                    {{ form.price_min|as_crispy_field }}
+                    <label for="id_price_min">Min Price</label>
+                </div>
+                <div class="col-md-6 form-floating">
+                    {{ form.price_max|as_crispy_field }}
+                    <label for="id_price_max">Max Price</label>
+                </div>
+            </div>
+            
+            <!-- Year Min and Max -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-6 form-floating">
+                    {{ form.year_min|as_crispy_field }}
+                    <label for="id_year_min">Min Year</label>
+                </div>
+                <div class="col-md-6 form-floating">
+                    {{ form.year_max|as_crispy_field }}
+                    <label for="id_year_max">Max Year</label>
+                </div>
+            </div>
+            
+            <!-- Mileage Min and Max -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-6 form-floating">
+                    {{ form.mileage_min|as_crispy_field }}
+                    <label for="id_mileage_min">Min Mileage</label>
+                </div>
+                <div class="col-md-6 form-floating">
+                    {{ form.mileage_max|as_crispy_field }}
+                    <label for="id_mileage_max">Max Mileage</label>
+                </div>
+            </div>
+            
+            <!-- Zipcode and Radius -->
+            <div class="row g-3 mt-3">
+                <div class="col-md-6 form-floating">
+                    {{ form.zipcode|as_crispy_field }}
+                    <label for="id_zipcode">Zipcode (e.g., 90210)</label>
+                </div>
+                <div class="col-md-6 form-floating">
+                    {{ form.radius|as_crispy_field }}
+                    <label for="id_radius">Radius (in Miles)</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Include JavaScript for Dynamic Dropdowns -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Handling the dynamic dropdown for car models
+        $("#id_make").change(function () {
+            var url = "{% url 'ajax_load_models' %}";  // Ensure you replace with the correct URL name
+            var makeId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'make': makeId
+                },
+                success: function (data) {
+                    $("#id_model").html('<option value="">Select Model</option>');
+                    $.each(data, function (key, value) {
+                        $("#id_model").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        });
+
+        // Preload the model dropdown if a make is already selected (for editing existing listings)
+        {% if form.make.value %}
+        $("#id_make").trigger('change');
+        {% endif %}
+    });
+</script>
+
+{% endblock %}

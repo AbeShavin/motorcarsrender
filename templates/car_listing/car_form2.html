@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Motorcars.com - Listings{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>{{ car.pk|yesno:"Edit Car Listing,Create Car Listing" }}</h1>
+    <form method="post" enctype="multipart/form-data" class="car-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <label for="id_image">Select Multiple (up to 10) Images:</label>
+            <input type="file" name="image" id="id_image" multiple>
+        </div>
+        <button type="submit" class="submit-button">Save</button>
+    </form>
+    
+</div>
+{% endblock %}

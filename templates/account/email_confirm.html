@@ -1,4 +1,4 @@
-{% extends "account/base_entrance.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load account %}
 {% load allauth %}
@@ -16,11 +16,11 @@
                 {% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an email address for user {{ user_display }}.{% endblocktrans %}
             {% endelement %}
             {% url 'account_confirm_email' confirmation.key as action_url %}
-            {% element form method="post" action=action_url %}
+            {% element form method="post" action=action_url class="car-form" %}
                 {% slot actions %}
                     {% csrf_token %}
                     {{ redirect_field }}
-                    {% element button type="submit" %}
+                    {% element button type="submit" class="ssubmit-button" %}
                         {% trans 'Confirm' %}
                     {% endelement %}
                 {% endslot %}

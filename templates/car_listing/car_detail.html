@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Motorcars.com - Listings{% endblock %}
+
+{% block content %}
+<div class="car-detail-container">
+    <div class="car-main-image-container">
+        <img src="{{ car.image.url }}" class="main-image" alt="Main Image" id="mainImage">
+    </div>
+    <div class="car-images">
+        {% for image in car.additional_images.all %}
+            <img src="{{ image.image.url }}" alt="Additional Image" class="car-image thumbnail" onclick="changeMainImage(event)">
+        {% endfor %}
+    </div>
+    <div class="car-info">
+        {% if user == car.owner %}
+            <div class="car-actions">
+                <a href="{% url 'car_edit' car.pk %}" class="button edit-button">Edit</a>
+                <a href="{% url 'car_delete' car.pk %}" class="button delete-button">Delete</a>
+            </div>
+        {% endif %}
+        <h2>{{ car.year }} {{ car.make }} {{ car.model }}</h2>
+        <p><strong>Location:</strong> {{ car.zipcode }}</p>
+        <p><strong>Price:</strong> ${{ car.price }}</p>
+        <p>{{ car.description }}</p>
+    </div>
+    <div class="contact-seller">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'start_conversation' car.owner.pk %}" class="button contact-button">Contact Seller</a>
+        {% else %}
+            <p><a href="{% url 'account_login' %}?next={% url 'car_detail' car.pk %}">Log in</a> to contact the seller.</p>
+        {% endif %}
+    </div>
+    <br>
+    <div class="contact-seller">
+        {% if user.is_authenticated %}
+            {% if is_favorited %}
+                <form method="post" action="{% url 'remove_favorite' car.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="submit-button">Remove from Favorites</button>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'add_favorite' car.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="submit-button">Add to Favorites</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    </div>
+    <button id="request-chat-btn" onclick="requestLiveChat({{ car.owner.id }})">Request Live Chat with Seller</button>
+
+<script type="text/javascript">
+    function requestLiveChat(sellerId) {
+        $.ajax({
+            url: `/messaging/start-chat/${sellerId}/`,
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
+            success: function(response) {
+                window.location.href = `/messaging/chat-room/${response.chat_room_id}/`;
+            },
+            error: function(xhr, status, error) {
+                alert("An error occurred while requesting the chat.");
+            }
+        });
+    }
+    
+    function getCSRFToken() {
+        let cookieValue = null;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith('csrftoken=')) {
+                cookieValue = cookie.substring('csrftoken='.length, cookie.length);
+                break;
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+{% endblock %}

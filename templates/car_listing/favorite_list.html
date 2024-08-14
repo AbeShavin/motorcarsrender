@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="form-container">
+    {% if favorites %}
+        <ul>
+        {% for favorite in favorites %}
+            <li>
+                <a href="{% url 'car_detail' favorite.car.id %}">
+                    <img src="{{ favorite.car.image.url }}" style="width:100px;height:auto;"> {{ favorite.car.make }} {{ favorite.car.model }} - ${{ favorite.car.price }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no favorite cars.</p>
+    {% endif %}
+</div>
+{% endblock %}

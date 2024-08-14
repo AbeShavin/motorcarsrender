@@ -5,6 +5,7 @@ from django.conf import settings
 from members.views import home
 from django.conf.urls.static import static
 from car_listing.views import car_search
+
 urlpatterns = [
     path('', home, name='home'),
     path("admin/", admin.site.urls),

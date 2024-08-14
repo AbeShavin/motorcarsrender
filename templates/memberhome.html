@@ -1,50 +1,119 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Motorcars.com - Account Management{% endblock %}
 
 {% block content %}
-<div class="acontainer">
-    <div class="left-half">
-
-<div class="form-container">
-    <h2>User Profile</h2>
-    
-    <p><strong>Username:</strong> <font color="blue">{{ user.username }}</font></p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    
-    <h3>Account Management</h3>
-    <ul class="no-bullets">
-        <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
-        <li><a href="{% url 'account_email' %}">Change Email</a></li>
-    </ul>
 <br>
-{% if car_count == 0 %}
-    <p>You have no car listings. <a href="{% url 'car_create' %}" class="submit-button">Add your first listing</a>.</p>
+<br>
+{% if profile.image %}
+<center><img src="{{ profile.image.url }}" alt="Profile Picture" height="150px" width="500px"></center>
 {% else %}
-    <div class="container">
-    <p>You have {{ car_count }} car listing{{ car_count|pluralize }}.</p>
-    {% for car in user_cars %}
-        <a href="{% url 'car_detail' car.pk %}">
-        <img src="{{ car.image.url }}" alt="{{ car.title }}" style="width:100px;height:auto;">
-        </a>
-        <h2>{{ car.title }}</h2>
-    {% endfor %}
+<center><img src="{% static 'images/no-image.png' %}" alt="Profile Picture" height="150px" width="500px"></center>
 {% endif %}
-</div>
-</div>
-</div>
+<br>
+<div class="acontainer">
+<div class="left-half">
+        <h2>{{ user.username }}'s Profile</h2>
+        <h5>Your public profile address is:</h5>
+        <h5>www.Motorcars.com/members/profile/ {{ user.username }}</h5>
+        <h5>Users will see this information:</h5>
+        <p><strong>Username:</strong> <font color="blue">{{ user.username }}</font></p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        
+        <!-- Display profile details if profile exists -->
+        {% if profile %}
+            <p><strong>Phone #:</strong> {{ profile.contact_number }}</p>
+            <p><strong>Address:</strong> {{ profile.address }}</p>
+            <p><strong>Zipcode:</strong> {{ profile.zipcode }}</p>
+            <p><strong>Seller Type:</strong> {{ profile.get_seller_type_display }}</p>       
+        {% endif %}
 
-<div class="right-half">
-<h2>Your Conversations</h2>
-<ul>
-    {% for item in conversation_data %}
+                     
+            <h3>Account Management</h3>
+            <ul class="no-bullets">
+                <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+                <li><a href="{% url 'account_email' %}">Change Email</a></li>
+            </ul>
+            <br>
+            <form method="post" enctype="multipart/form-data" class="car-form">
+                {% csrf_token %}
+                {{ profile_form.as_p }}
+                <button type="submit">Save Profile</button>
+            </form>
+        
+    </div>
+    
+    <div class="right-half">
+        
+            <h2>Messages</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>Message</th>
+                        <th>Reply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if conversation_data %}
+                    {% for item in conversation_data %}
+                    <tr>
+                        <td>{{ item.partner.username }}</td>
+                        <td>{{ item.last_message.content }}</td>
+                        <td><a href="{% url 'conversation_detail' item.conversation.pk %}" class="testbutton">Reply</a></td>
+                    
+                    </tr>
+                    {% endfor %}
+                    
+                {% else %}
+                <p>No Messages</p>
+                {% endif %}
+                </tbody>
+            </table>
+            
+
+            
+        <div class="form-container">
+            <h2>My Listings</h2>
+            <br>
+            {% if car_count == 0 %}
+            <p><a href="{% url 'car_create' %}" class="submit-button">Add First Listing</a></p>
+            {% else %}
+            <div class="container">
+                <p>{{ car_count }} listing{{ car_count|pluralize }}.</p>
+                {% for car in user_cars %}
+                    <a href="{% url 'car_detail' car.pk %}">
+                        <img src="{{ car.image.url }}" alt="{{ car.title }}" style="width:100px;height:auto;">
+                    </a>
+                    <h2>{{ car.title }}</h2>
+                {% endfor %}
+            {% endif %} 
+            </div>
+            <div class="container">
+                <h2>Your Favorite Cars</h2>
+
+{% if favorites %}
+    <ul>
+    {% for favorite in favorites %}
         <li>
-            <a href="{% url 'conversation_detail' item.conversation.pk %}">
-                Conversation with {{ item.partner.username }}: {{ item.last_message.text }}
+            <a href="{% url 'car_detail' favorite.car.id %}">
+                {{ favorite.car.make }} {{ favorite.car.model }} - ${{ favorite.car.price }}
             </a>
         </li>
     {% endfor %}
-</ul>
+    </ul>
+{% else %}
+    <p>You have no favorite cars.</p>
+{% endif %}
+            </div>
+    </div>
+    </div>
 </div>
+<center>
+<div>
+<br>
+Copyright 2024 Abe Shavin 
 </div>
+</center>
+
 {% endblock %}

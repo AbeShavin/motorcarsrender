@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ profile.user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <center>
+        <div>
+            {% if profile.image %}
+            <img src="{{ profile.image.url }}" alt="Profile Picture" style="width:300px;height:100px;">
+            {% else %}
+            <p>No profile picture uploaded.</p>
+            {% endif %}
+            <h1>{{ profile.user.username }}</h1>
+        </div>
+    </center>
+    <div class="form-container">
+    <p><strong>Phone #:</strong> {{ profile.contact_number }}</p>
+    <p><strong>Address:</strong> {{ profile.address }}</p>
+    <p><strong>Zipcode:</strong> {{ profile.zipcode }}</p>
+    <p><strong>Email:</strong> {{ profile.user.email }}</p>
+    <p><strong>Cars:</strong> {{ user_cars.count }}</p>
+    {% if request.user == profile.user %}
+    <a href="{% url 'members' %}">Edit Profile</a>
+    {% endif %}
+    <div class="contact-seller">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'start_conversation' profile.user.id %}" class="button contact-button">Contact Seller</a>
+        {% else %}
+            <p><a href="{% url 'account_login' %}?next={% url 'profile_view' profile.user.username %}">Log in</a> to contact the seller.</p>
+        {% endif %}
+    </div>
+    
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Year</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in user_cars %}
+            <tr>
+                <td>
+                    {% if car.image %}
+                        <a href="{% url 'car_detail' car.pk %}"><img src="{{ car.image.url }}" alt="{{ car.make }} {{ car.model }}" style="width:100px;height:auto;"></a>
+                    {% else %}
+                        <a href="{% url 'car_detail' car.pk %}"><img src="{% static 'images/no-image.png' %}" alt="No Image" style="width:100px;height:auto;"></a>
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'car_detail' car.pk %}">{{ car.year }}</a></td>
+                <td><a href="{% url 'car_detail' car.pk %}">{{ car.make }}</a></td>
+                <td><a href="{% url 'car_detail' car.pk %}">{{ car.model }}</a></td>
+                <td><a href="{% url 'car_detail' car.pk %}">${{ car.price }}</a></td>
+                <td><a href="{% url 'car_detail' car.pk %}">{{ car.zipcode }}</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No cars found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+{% endblock %}

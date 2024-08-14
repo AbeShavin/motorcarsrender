@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+<h2>Search Results</h2>
+
+<!-- Back to Search Link -->
+<a href="{% url 'car_search' %}" class="back-link">Back to Search</a>
+
+<!-- Results Table -->
+<table class="results-table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in cars %}
+        <tr>
+            <td>
+                {% if car.image %}
+                    <a href="{% url 'car_detail' car.pk %}"><img src="{{ car.image.url }}" alt="{{ car.make }} {{ car.model }}" style="width:100px;height:auto;"></a>
+                {% else %}
+                    <a href="{% url 'car_detail' car.pk %}"><img src="{% static 'images/no-image.png' %}" alt="No Image" style="width:100px;height:auto;"></a>
+                {% endif %}
+            </td>
+            <td><a href="{% url 'car_detail' car.pk %}">{{ car.year }}</a></td>
+            <td><a href="{% url 'car_detail' car.pk %}">{{ car.make }}</a></td>
+            <td><a href="{% url 'car_detail' car.pk %}">{{ car.model }}</a></td>
+            <td><a href="{% url 'car_detail' car.pk %}">${{ car.price }}</a></td>
+            <td><a href="{% url 'car_detail' car.pk %}">{{ car.zipcode }}</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No cars found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="pagination">
+    <span class="step-links">
+        {% if cars.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ cars.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
+        </span>
+
+        {% if cars.has_next %}
+            <a href="?page={{ cars.next_page_number }}">Next</a>
+            <a href="?page={{ cars.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

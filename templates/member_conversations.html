@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Motorcars.com - Conversations{% endblock %}
+
+{% block content %}
+{% if profile.image %}
+    <center><img src="{{ profile.image.url }}" alt="Profile Picture" height="150px" width="500px"></center>
+{% else %}
+    <center><img src="{% static 'images/no-image.png' %}" alt="Profile Picture" height="150px" width="500px"></center>
+{% endif %}
+<br>
+<h2>Messages</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>Message</th>
+                        <th>Reply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if conversation_data %}
+                    {% for item in conversation_data %}
+                    <tr>
+                        <td>{{ item.partner.username }}</td>
+                        <td>{{ item.last_message.content }}</td>
+                        <td><a href="{% url 'conversation_detail' item.conversation.pk %}" class="testbutton">Reply</a></td>
+                    
+                    </tr>
+                    {% endfor %}
+                    
+                {% else %}
+                <p>No Messages</p>
+                {% endif %}
+                </tbody>
+            </table>
+
+{% endblock %}

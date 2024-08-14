@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from channels.routing import ProtocolTypeRouter
+from django.core.asgi import get_asgi_application
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,6 +48,9 @@ INSTALLED_APPS = [
     "members",
     "car_listing",
     "messaging",
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -127,13 +134,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+#STATIC_URL = 'http://127.0.0.1:8001/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+ALLAUTH_DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
@@ -143,13 +151,21 @@ AUTHENTICATION_BACKENDS = [
 
 # Email verification and other allauth settings
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'none' # 'mandatory' before deploy for testing
+ACCOUNT_EMAIL_VERIFICATION = 'None' # 'mandatory' before deploy for testing
 ACCOUNT_AUTHENTICATION_METHOD = 'username'  # or 'email'
 ACCOUNT_USERNAME_REQUIRED = True
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_CHANGE_EMAIL = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "Motorcars.com - Accounts"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 8
 # Optional: Specify the login and logout redirect URLs
 LOGIN_REDIRECT_URL = '/members/'
 LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

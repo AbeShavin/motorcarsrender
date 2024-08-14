@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Motorcars.com - Search{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <center><h1>Search Motorcars</h1></center>
+    
+    <form method="get" action="{% url 'search_results' %}" class="car-form">
+        <div class="form-floating mb-3">
+            {{ form.make }}
+            <label for="id_make">Make</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.model }}
+            <label for="id_model">Model</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.price_min }}
+            <label for="id_price_min">Min Price</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.price_max }}
+            <label for="id_price_max">Max Price</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.year_min }}
+            <label for="id_year_min">Min Year</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.year_max }}
+            <label for="id_year_max">Max Year</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.mileage_min }}
+            <label for="id_mileage_min">Min Mileage</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.mileage_max }}
+            <label for="id_mileage_max">Max Mileage</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.zipcode }}
+            <label for="id_zipcode">Zip Code</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.radius }}
+            <label for="id_radius">Radius</label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<!-- Include JavaScript for Dynamic Dropdowns -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Handling the dynamic dropdown for car models
+        $("#id_make").change(function () {
+            var url = "{% url 'ajax_load_models' %}";  // Ensure you replace with the correct URL name
+            var makeId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'make': makeId
+                },
+                success: function (data) {
+                    $("#id_model").html('<option value="">Select Model</option>');
+                    $.each(data, function (key, value) {
+                        $("#id_model").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        });
+
+        // Preload the model dropdown if a make is already selected (for editing existing listings)
+        {% if form.make.value %}
+        $("#id_make").trigger('change');
+        {% endif %}
+    });
+</script>
+
+{% endblock %}
