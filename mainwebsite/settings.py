@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-2la%k5a*oj^k!&9nnxc4&b=g%im1v8n@pgh3l!$08d)+%igos$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['motorcars-com.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
@@ -76,6 +76,8 @@ DATABASES = {
         engine='django.db.backends.postgresql',
     )
 }
+
+DATABASES["default"] = dj_database_url.parse("postgresql://motorcarsdatabaseinstance_user:WF6Xwtikj1jH6JkoGeL6dcxKFwEacBP5@dpg-cquihjaj1k6c73b5c5gg-a.virginia-postgres.render.com/motorcarsdatabaseinstance")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
