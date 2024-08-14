@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     "messaging",
     "crispy_forms",
     "crispy_bootstrap5",
-    "channels",
 ]
 
 MIDDLEWARE = [
@@ -72,11 +71,11 @@ WSGI_APPLICATION = "mainwebsite.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'NAME': 'Motorcars',
+        'USER': 'Abe',
+        'PASSWORD': 'brianna5842',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -114,7 +113,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
