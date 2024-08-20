@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Your Vehicle Profiles</h2>
+  {% if vehicle_profiles %}
+    <ul>
+      {% for profile in vehicle_profiles %}
+        <li>
+          <a href="{% url 'vehicle_profile_detail' profile.pk %}">{{ profile.year }} {{ profile.make }} {{ profile.model }}</a>
+          <a href="{% url 'edit_vehicle_profile' profile.pk %}">Edit</a>
+          <a href="{% url 'delete_vehicle_profile' profile.pk %}" onclick="return confirm('Are you sure you want to delete this profile?');">Delete</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You have no vehicle profiles. <a href="{% url 'create_vehicle_profile' %}">Create one now</a>.</p>
+  {% endif %}
+{% endblock %}

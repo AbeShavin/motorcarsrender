@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ vehicle_profile.year }} {{ vehicle_profile.make }} {{ vehicle_profile.model }}</h2>
+  <p>{{ vehicle_profile.description }}</p>
+  <h3>Modifications</h3>
+  <ul>
+    <li>Engine: {{ vehicle_profile.engine_modifications }}</li>
+    <li>Transmission: {{ vehicle_profile.transmission_modifications }}</li>
+    <li>Body: {{ vehicle_profile.body_modifications }}</li>
+    <li>Brakes: {{ vehicle_profile.brake_modifications }}</li>
+    <li>Suspension: {{ vehicle_profile.suspension_modifications }}</li>
+    <li>Rims/Tires: {{ vehicle_profile.rims_tires }}</li>
+  </ul>
+  <h3>Images</h3>
+  {% for image in vehicle_profile.images.all %}
+    <img src="{{ image.image.url }}" alt="Image of {{ vehicle_profile.make }} {{ vehicle_profile.model }}" style="max-width: 200px;">
+  {% endfor %}
+  <h3>Comments</h3>
+  {% for comment in comments %}
+    <p>{{ comment.content }} - <small>by {{ comment.author.username }} on {{ comment.created_at }}</small></p>
+    {% if comment.author == request.user or vehicle_profile.owner == request.user %}
+      <form method="post" action="{% url 'delete_comment' comment.pk %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    {% endif %}
+  {% endfor %}
+  
+  <h3>Add a Comment</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Post Comment</button>
+  </form>
+{% endblock %}

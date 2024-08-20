@@ -102,7 +102,7 @@ header {
 
 .nav-links li a.sidebar-toggle {
     color: white;
-    background-color: #333;
+    background-color: #90c7fb;
     padding: 10px;
     border-radius: 5px;
     text-decoration: none;
@@ -132,7 +132,7 @@ header {
     position: fixed;
     top: 70px; /* Matches the navbar height */
     left: -250px; /* Hidden by default */
-    background-color: #333;
+    background-color: #9dc9fd;
     padding-top: 20px;
     transition: left 0.3s ease;
     overflow-x: hidden;
@@ -157,7 +157,7 @@ header {
 }
 
 .sidebar-menu li a:hover {
-    background-color: #575757;
+    background-color: #e78a8a;
     border-radius: 4px;
 }
 

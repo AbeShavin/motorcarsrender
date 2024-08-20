@@ -4,7 +4,6 @@ from django.urls import path, include
 from django.conf import settings
 from members.views import home
 from django.conf.urls.static import static
-from car_listing.views import car_search
 
 urlpatterns = [
     path('', home, name='home'),
@@ -13,6 +12,7 @@ urlpatterns = [
     path('members/', include('members.urls')),
     path('search/', include('car_listing.urls')),
     path('messaging/', include('messaging.urls')),
+    path('m/', include ('vehicle_profiles.urls')),
 ]
 
 if settings.DEBUG:

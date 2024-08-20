@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Delete Vehicle Profile</h2>
+  <p>Are you sure you want to delete the profile for {{ vehicle_profile.year }} {{ vehicle_profile.make }} {{ vehicle_profile.model }}?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'vehicle_profile_dashboard' %}">Cancel</a>
+  </form>
+{% endblock %}

@@ -3,7 +3,18 @@
 {% block title %}Motorcars.com - Account Management{% endblock %}
 
 {% block content %}
+            <div class="sidebar">
+                <ul class="sidebar-menu" id="dnav-links">
+                    <li><a href="{% url 'car_create' %}" style="font-weight:bold;">Add Vehicle</a></li>
+                    <li><a href="{% url 'favorite_list' %}">Favorites</a></li>
+                    <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+                    <li><a href="{% url 'account_email' %}">Change Email</a></li>
+                    <li><a href="{% url 'conversation_list' %}">Messages</a></li>
+                </ul>
+            </div>
+            
 <br>
+<center><a href="#" id="sidebar-toggle" class="sidebar-toggle">☰ Show/Hide Account Dashboard</a></center>
 <br>
 {% if profile.image %}
 <center><img src="{{ profile.image.url }}" alt="Profile Picture" height="150px" width="500px"></center>

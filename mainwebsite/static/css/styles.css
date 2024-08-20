@@ -65,7 +65,7 @@ header {
     padding: 10px 20px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
@@ -127,16 +127,18 @@ header {
 
 /* Sidebar Styles */
 .sidebar {
-    width: 250px;
-    height: 100%;
-    position: fixed;
+    width: 200px;
+    height: 50%;
+    position: absolute;
     top: 70px; /* Matches the navbar height */
-    left: -250px; /* Hidden by default */
-    background-color: #333;
+    left: -200px; /* Hidden by default */
+    background-color: #b5000080;
     padding-top: 20px;
     transition: left 0.3s ease;
     overflow-x: hidden;
     z-index: 1000; /* Ensure it sits below the navbar */
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
+    background: url("/static/images/skidmarks.png") 100%
 }
 
 .sidebar-menu {
@@ -150,16 +152,20 @@ header {
 }
 
 .sidebar-menu li a {
-    color: white;
+    color: rgb(75, 75, 75);
     text-decoration: none;
+    font-weight: bold;
     display: block;
     transition: background-color 0.3s ease;
 }
 
 .sidebar-menu li a:hover {
-    background-color: #575757;
+    background: #c8ff49;
     border-radius: 4px;
 }
+
+
+
 
 /* Show Sidebar When .sidebar-open is Applied */
 body.sidebar-open .sidebar {
@@ -167,7 +173,7 @@ body.sidebar-open .sidebar {
 }
 
 body.sidebar-open .main-content {
-    margin-left: 250px; /* Adjust based on the sidebar width */
+    margin-left: 200px; /* Adjust based on the sidebar width */
 }
 
 /* Hide Sidebar When Logged Out */
@@ -176,7 +182,7 @@ body.logged-out .sidebar {
 }
 
 body.logged-in .main-content {
-    margin-left: 250px; /* Adjust based on the sidebar width */
+    margin-left: 200px; /* Adjust based on the sidebar width */
 }
 
 /* Main Content Styles */

@@ -40,7 +40,6 @@
                 <li><a href="{% url 'car_search' %}">Validate It!</a></li>
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'account_login' %}"><b>My Home</b></a></li>
-                <li><a href="#" id="sidebar-toggle" class="sidebar-toggle">☰ Account</a></li>
                 <li><a href="{% url 'account_logout' %}" class="button edit-button">Sign Out</a></li>
                 {% else %}
                 <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
@@ -48,19 +47,21 @@
                 {% endif %}
             </ul>
         </nav>
+    
     </header>
+    
     <main>
-        {% if user.is_authenticated %}
-            <div class="sidebar">
-                <ul class="sidebar-menu" id="dnav-links">
-                    <li><a href="{% url 'car_create' %}" style="font-weight:bold;">Add Vehicle</a></li>
-                    <li><a href="{% url 'favorite_list' %}">Favorites</a></li>
-                    <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
-                    <li><a href="{% url 'account_email' %}">Change Email</a></li>
-                    <li><a href="{% url 'conversation_list' %}">Messages</a></li>
-                </ul>
-            </div>
-        {% endif %}
+    {% if user.is_authenticated %}
+        <div class="sidebar">
+            <ul class="sidebar-menu" id="dnav-links">
+                <li><a href="{% url 'car_create' %}">- Add A Vehicle +</a></li>
+                <li><a href="{% url 'favorite_list' %}">- My Favorites</a></li>
+                <li><a href="{% url 'conversation_list' %}">- Messages</a></li>
+                <li><a href="{% url 'account_change_password' %}">- Change Password</a></li>
+                <li><a href="{% url 'account_email' %}">- Change @Email</a></li>
+            </ul>
+        </div>
+    {% endif %}
         <div class="main-content">
             <div class="container">
             {% block content %}
@@ -71,8 +72,8 @@
     </main> 
 
     <!-- External JavaScript Files -->
-    <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/favorites.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     
    
 </body>

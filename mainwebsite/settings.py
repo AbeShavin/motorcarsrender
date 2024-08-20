@@ -1,19 +1,18 @@
 from pathlib import Path
 import os
-import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-PORT = int(os.environ.get('PORT', 8000))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "django-insecure-2la%k5a*oj^k!&9nnxc4&b=g%im1v8n@pgh3l!$08d)+%igos$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower == "true"
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
@@ -30,6 +29,7 @@ INSTALLED_APPS = [
     "members",
     "car_listing",
     "messaging",
+    'vehicle_profiles',
     "crispy_forms",
     "crispy_bootstrap5",
 ]
@@ -51,7 +51,7 @@ ROOT_URLCONF = "mainwebsite.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        'DIRS': [os.path.join(BASE_DIR, 'mainwebsite', 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -70,16 +70,16 @@ WSGI_APPLICATION = "mainwebsite.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://Abe:brianna5842@localhost:5432/Motorcars',
-        conn_max_age=600,
-        engine='django.db.backends.postgresql',
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Motorcars',
+        'USER': 'Abe',
+        'PASSWORD': 'brianna5842',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
-DATABASES["default"] = dj_database_url.parse(DATABASE_URL)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -114,14 +114,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'mainwebsite', 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
